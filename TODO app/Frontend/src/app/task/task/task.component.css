@@ -1,0 +1,13 @@
+.actions {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}
+.actions button {
+	margin-right: 20px;
+	margin-bottom: 5px;
+}
+
+th, tr {
+	text-align: center;
+}

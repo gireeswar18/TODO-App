@@ -1,0 +1,94 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+	rel="stylesheet">
+<style>
+	* {
+		font-family: "Roboto";
+	}
+</style>
+<nav class="navbar border border-b-2 ">
+	<div class="container-fluid">
+		<p class="navbar-brand fw-bold mx-4">Todo App</p>
+
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-success mx-4" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+			Add Task
+		</button>
+
+	</div>
+</nav>
+<div class="container mt-5">
+	<div *ngIf="(taskList.length == 0); else tableBlock">
+		<h4>No data</h4>
+	</div>
+	<ng-template #tableBlock>
+		<table class="table table-hover">
+			<thead>
+				<th scope="col">Task No.</th>
+				<th scope="col">Description</th>
+				<th scope="col">Actions</th>
+			</thead>
+			<tbody *ngFor="let task of taskList; let i = index">
+				<tr>
+					<th scope="row">{{i + 1}}</th>
+					<td>{{task.description}}</td>
+
+					<td class="actions">
+						<button type="button" class="btn btn-primary" type="button" (click)="editTask(task)"
+							data-bs-toggle="modal" data-bs-target="#editTaskModal">
+							Edit Task
+						</button>
+						<button type="button" class="btn btn-danger" type="button" (click)="deleteTask(task.id!)">
+							Delete Task
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</ng-template>
+</div>
+
+
+
+<!-- Add Task Modal -->
+<div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="addModalLabel">Add Task</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form (ngSubmit)="createTask()">
+					<input type="text" class="form-control mt-2 mb-2" placeholder="Enter the task..."
+						[(ngModel)]="newTask.description" name="addDesc">
+					<button class="btn btn-success mt-3 mb-2" data-bs-dismiss="modal">Add task</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Edit Task Modal -->
+<div class="modal fade" id="editTaskModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h1 class="modal-title fs-5" id="editModalLabel">Edit Task</h1>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form (ngSubmit)="updateTask()">
+					<input type="text" class="form-control mt-2 mb-2" placeholder="Enter the task..."
+						[(ngModel)]="updatedTask.description" name="editDesc">
+					<button class="btn btn-danger mt-3 mb-2" type="button" (click)="cancelEdit()"
+						data-bs-dismiss="modal">Cancel</button>
+					<button class="btn btn-success mt-3 mb-2 ms-2" type="submit" data-bs-dismiss="modal">Edit
+						task</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
